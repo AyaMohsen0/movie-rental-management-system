@@ -1,0 +1,144 @@
+/*Query (a): What was the most interesting movie genre(s) that had maximum number of rentals?*/
+SELECT G.GenreName, COUNT(R.MovieID) as Rental_Count
+FROM Rental R
+JOIN Movie_Tape M ON M.MovieID = R.MovieID
+JOIN MovieGenre MC ON MC.MovieID = R.MovieID
+JOIN Movie_Genre G ON G.GenreName = MC.GenreName
+GROUP BY G.GenreName
+HAVING COUNT(R.MovieID) = (
+    SELECT MAX(Rental_Count)
+    FROM (
+        SELECT COUNT(R2.MovieID) as Rental_Count
+        FROM Rental R2
+        JOIN Movie_Tape M2 ON M2.MovieID = R2.MovieID
+        JOIN MovieGenre MC2 ON MC2.MovieID = R2.MovieID
+        JOIN Movie_Genre G2 ON G2.GenreName = MC2.GenreName
+        GROUP BY G2.GenreName
+    ) MaxRentals
+)
+ORDER BY G.GenreName;
+
+/*Query (b): What was the movie genre that hadn’t any rental requests for the last month?*/
+SELECT G.GenreName
+FROM MovieGenre G
+WHERE G.GenreName NOT IN (
+    SELECT DISTINCT MC.GenreName
+    FROM Rental R
+    JOIN Movie_Tape M ON M.MovieID = R.MovieID
+    JOIN MovieGenre MC ON MC.MovieID = R.MovieID
+    WHERE R.RENTALDATE >= DATEADD(MONTH, -1, GETDATE())
+);
+
+/*Query (c): What were the added movies for each genre and when?*/
+SELECT G.GenreName, M.Title, MS.SupplyDate
+FROM MovieSupply MS
+JOIN Movie_Tape M ON M.MovieID = MS.MovieID
+JOIN MovieGenre MC ON MC.MovieID = M.MovieID
+JOIN Movie_Genre G ON G.GenreName = MC.GenreName
+ORDER BY G.GenreName, MS.SupplyDate;
+
+/*Query (d) Who were the employers didn’t announce any job last month?*/
+SELECT M.*, 
+       (SELECT COUNT(*) 
+        FROM Rental R 
+        WHERE R.MemberShipID = M.MemberShipID) AS Rented_Movies
+FROM MemberShip M;
+---------------------------------------------
+/*Query (e) What were the available positions at each employer last month?*/
+select G.GenreName , count (R.MovieID) as Total_Rentals , sum(R.rentalcharge) as Total_Sales
+from Rental R
+join Movie_Tape M ON  M.MovieID=R.MovieID
+join MovieGenre MC ON MC.MovieID = R.MovieID
+join Movie_Genre G ON G.GenreName = MC.GenreName
+group by G.GenreName
+order by Total_Rentals DESC
+---------------------------------------------------------------
+/*Query (f) For each seeker, retrieve all his/her information and the number
+of jobs he applied for */
+select S.*
+from Supplier S
+where S.SupplierName NOT IN 
+                            ( select distinct  MS.SupplierName
+							  from MovieSupply MS
+							  where MS.SupplyDate >=  DATEADD(MONTH, -3, GETDATE())
+							  );
+---------------------------------------------------------------
+
+--All Movies
+                    SELECT * FROM Movie_Tape;
+
+
+---------------------------------------------------------------
+
+--Available Movies
+                    SELECT M.MovieID, M.Title
+                              FROM Movie_Tape M
+                              WHERE M.NoOfCopies > (
+                                  SELECT COUNT(*) FROM Rental R WHERE R.MovieID = M.MovieID AND R.ReturnDate IS NULL);
+
+
+---------------------------------------------------------------
+
+--Rented Movies
+                   SELECT DISTINCT M.MovieID, M.Title
+                              FROM Movie_Tape M
+                              JOIN Rental R ON M.MovieID = R.MovieID
+                              WHERE R.RentalDate IS Not NULL;
+
+
+---------------------------------------------------------------
+
+--Top Rented Movies
+                   SELECT M.MovieID, M.Title, COUNT(*) AS RentalCount
+                              FROM Movie_Tape M
+                              JOIN Rental R ON M.MovieID = R.MovieID
+                              GROUP BY M.MovieID, M.Title
+                              ORDER BY RentalCount DESC;
+
+
+---------------------------------------------------------------
+
+
+--Movies by Genre
+                    SELECT GenreName, COUNT(*) AS TotalMovies
+                              FROM MovieGenre
+                              GROUP BY GenreName;
+
+---------------------------------------------------------------
+
+--All Memberships
+                    SELECT * FROM MemberShip;
+
+
+---------------------------------------------------------------
+
+--Active Memberships
+                   SELECT DISTINCT M.MemberShipID
+                              FROM MemberShip M
+                              JOIN Rental R ON M.MemberShipID = R.MemberShipID;
+
+---------------------------------------------------------------
+
+
+--Inactive Memberships
+                    SELECT M.MemberShipID
+                              FROM MemberShip M
+                              WHERE NOT EXISTS (
+                                  SELECT * FROM Rental R WHERE R.MemberShipID = M.MemberShipID);
+
+---------------------------------------------------------------
+
+
+ Top Renting Members
+                    SELECT M.MemberShipID, COUNT(*) AS TotalRentals
+                              FROM MemberShip M
+                              JOIN Rental R ON M.MemberShipID = R.MemberShipID
+                              GROUP BY M.MemberShipID
+                              ORDER BY TotalRentals DESC;
+
+---------------------------------------------------------------
+
+--All Rentals
+                   SELECT * FROM Rental;
+
+---------------------------------------------------------------

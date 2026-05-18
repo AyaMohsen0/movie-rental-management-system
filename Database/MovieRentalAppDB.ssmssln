@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# SQL Server Management Studio Solution File, Format Version 20.00
+VisualStudioVersion = 15.0.28307.421
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "MovieRentalAppDB", "MovieRentalAppDB\MovieRentalAppDB.ssmssqlproj", "{4B3A0A63-619A-49B0-A5D7-119CE04CA34E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Default|Default = Default|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4B3A0A63-619A-49B0-A5D7-119CE04CA34E}.Default|Default.ActiveCfg = Default
+		{4FDBE84B-5932-44C8-AE4F-AB933EEF2580}.Default|Default.ActiveCfg = Default
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3B93C7B5-EF6C-4588-A6D7-CED2BD27AC9A}
+	EndGlobalSection
+EndGlobal
