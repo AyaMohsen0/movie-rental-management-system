@@ -19,10 +19,10 @@ This project was developed collaboratively as part of a university team project.
 
 ## Team Members
 
-Aya Mohsen
-Shahd Ossama
-Nour Mohamed
-MennaTallah Ahmed
+- Aya Mohsen
+- Shahd Ossama
+- Nour Mohamed
+- MennaTallah Ahmed
 
 ## My Role
 Developed the application as part of a university software/database project, including GUI development, database integration, and system functionality.
