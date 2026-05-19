@@ -1,6 +1,7 @@
 # Movie Rental Management System
 
 A desktop application developed using C# WinForms and SQL Server for managing movie rentals, customers, and inventory.
+This project was developed collaboratively as part of a university team project.
 
 ## Features
 - User authentication
@@ -15,6 +16,13 @@ A desktop application developed using C# WinForms and SQL Server for managing mo
 - WinForms
 - SQL Server
 - Visual Studio 2022
+
+## Team Members
+
+Aya Mohsen
+Shahd Ossama
+Nour Mohamed
+MennaTallah Ahmed
 
 ## My Role
 Developed the application as part of a university software/database project, including GUI development, database integration, and system functionality.
