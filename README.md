@@ -20,7 +20,7 @@ This project was developed collaboratively as part of a university team project.
 ## Team Members
 
 - Aya Mohsen
-- Shahd Ossama
+- Shahd Osama
 - Nour Mohamed
 - MennaTallah Ahmed
 
